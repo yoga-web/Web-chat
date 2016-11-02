@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Callpy</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel='stylesheet prefetch' href='https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.css'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel='stylesheet prefetch' href='https://material.angularjs.org/1.1.0-rc.5/docs.css'> 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/reset.css">   
+    <link rel="stylesheet" href="css/style.css">    
+    <link rel="stylesheet" href="css/media.css">  
+  </head>
+
+  <body ng-app="MyApp" ng-controller="AppCtrl" ng-cloak="" md-theme="custom" >
+    <span class="rotate-phone">
+      <i class="material-icons screen_rotation">screen_rotation</i>
+      <span class="text">
+        Пожалуйста, переверните устройство в 
+        <br>вертикальное положение
+      </span>
+    </span>
+    <div class="container offline" >
+      <section class="menu">
+        <div class="sidebar">
+
+          <ul >
+            <li>
+              <a>
+                <span>Звуковые оповещания </span>
+                <md-switch ng-model="sound.true"></md-switch>
+              </a>
+            </li>
+            <li><a href="#">Оставить отзыв о Callpy</a></li>
+          </ul>
+          <span class="wrap-swipe-area">
+            <div class="swipe-area"></div>
+
+            <a href="#" data-toggle=".sidebar" id="sidebar-toggle">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </a>
+            <i class="material-icons arr arr-r">keyboard_arrow_right</i>
+            <i class="material-icons arr arr-l">keyboard_arrow_left</i>
+          </span>
+        </div>
+      </section>
+      <div class="main-content" >
+          <md-content>
+            <md-toolbar class="md-primary">
+              <md-grid-list
+                md-cols-xs="3" md-cols-sm="3" md-cols-md="3" md-cols-gt-md="3"
+                md-row-height-gt-md="8vh" md-row-height="8vh" md-row-height-sm="10vh" md-row-height-xs="5vh"  
+                md-gutter="16px" md-gutter-gt-sm="16px" md-gutter="16px">
+                <md-grid-tile md-colspan="2">
+                  <div class="consultant-info">
+                    <div class="wrap-detail">
+                      <div class="name">
+                        Консультант оффлайн
+                      </div>
+                      <div class="position">
+                        Название отдела
+                      </div>
+                      <span class="work-hours hidden-600" >Мы онлайн с 10:00 до 19:00 по Московскому времени</span>
+                    </div>
+                  </div>
+                 </md-grid-tile>
+
+                 <md-grid-tile  layout="row" layout-align="right">
+                  <span class="logo">Callpy</span> 
+                  <span class="work-hours" hide-gt-xs show-xs>Мы онлайн с 10:00 до 19:00 по Московскому времени</span>
+                 </md-grid-tile>
+
+              </md-grid-list>
+            </md-toolbar> 
+            <section class="chat" layout="column" md-column-height-gt-md="84vh" md-column-height="84vh" md-column-height-sm="82h md-column-height-xs="77vh"">
+              <md-content >
+                <div class="text">
+                  В данный момент все консультанты отдела "Название отдела" оффлайн.
+                  <br>
+                  Вы можете выбрать другой отдел, либо оставить нам сообщение. Для этого заполните форму ниже и нажмите Отправить.
+                  
+                  Мы ответим Вам в ближайшее время!
+                </div>
+                <form name="clientInfoForm">
+
+                <div class="choose ">
+                  <span class="desc-dep">Отдел:</span>
+                  <md-input-container class="departments clear">
+                    <md-select ng-model="selectedDepartment" ng-model-options="{trackBy: '$value.id'}">
+                      <md-option ng-value="department" ng-repeat="department in departments">{{ department.name }}</md-option>
+                    </md-select> 
+                  </md-input-container>
+                </div>
+
+
+                  <md-input-container class="md-block">
+                    <label>Ваше имя</label>
+                    <input type="text" name="clientName" ng-model="project.clientName" maxlength="30" required="">
+                    <div ng-messages="clientInfoForm.clientName.$error" role="alert">
+                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        The name is required and has to be less than 30 characters long.
+                      </div>
+                    </div>
+                  </md-input-container>
+                  <md-input-container class="md-block">
+                    <label>Ваш email</label>
+                    <input type="email" name="clientEmail" ng-model="project.clientEmail" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" required="">
+                    <div ng-messages="clientInfoForm.clientEmail.$error" role="alert">
+                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        The email is required and must be between 10 and 100 characters long and look like an e-mail address.
+                      </div>
+                    </div>
+                  </md-input-container>
+                  <md-input-container class="md-block">
+                    <label>Ваше сообщение</label>
+                    <textarea ng-model="project.clientComment" name="clientComment" md-maxlength="150" rows="3" md-select-on-focus="" required=""></textarea>
+                    <div ng-messages="clientInfoForm.clientComment.$error" role="alert">
+                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        The comment is required.
+                      </div>
+                    </div>
+                  </md-input-container>
+                  <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button class="md-raised" ng-click="answer('not useful')">
+                     Отменить
+                    </md-button>
+                    <md-button class="md-raised md-primary" ng-click="answer('useful')">
+                      Отправить
+                    </md-button>
+                  </md-dialog-actions>
+                </form>
+              </md-content>
+            </section>
+           </md-content>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu -->  
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
+   <script type="text/javascript">
+    $(window).load(function(){
+      $("[data-toggle]").click(function() {
+        var toggle_el = $(this).data("toggle");
+        $(toggle_el).toggleClass("open-sidebar");
+      });
+       $(".swipe-area").swipe({
+          swipeStatus:function(event, phase, direction, distance, duration, fingers)
+            {
+              if (phase=="move" && direction =="right") {
+                   $(".sidebar").addClass("open-sidebar");
+                   return false;
+              }
+              if (phase=="move" && direction =="left") {
+                   $(".sidebar").removeClass("open-sidebar");
+                   return false;
+              }
+            }
+      }); 
+    });
+    
+  </script>
+   
+  <!-- Material -->
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js'></script>
+  <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js'></script>
+  <script src='https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.js'></script>
+  <script src="js/index.js"></script>
+  <script src="js/device.js"></script>
+</body>
+</html>
